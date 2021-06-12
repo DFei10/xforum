@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded-lg mb-7 shadow">
                 <h4 class="text-xl font-semibold">
-                    <a href="/threads/{{ $thread->id }}">{{ $thread->title }}</a>
+                    <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
                 </h4>
                 <div class="flex py-6">
                     <div>

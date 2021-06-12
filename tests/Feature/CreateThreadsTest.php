@@ -26,6 +26,7 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_create_a_threads()
     {
+        $this->withoutExceptionHandling();
         $this->signIn();
 
         $thread = Thread::factory()->make();
@@ -41,20 +42,33 @@ class CreateThreadsTest extends TestCase
     public function a_thread_requires_a_title()
     {
         $this->signIn();
-        $thread = Thread::factory()->make(['title' => null]);
 
-        $this->post('/threads', $thread->toArray())
+        $this->publishThread(['title' => null])
             ->assertSessionHasErrors('title');
     }
 
     /** @test */
     public function a_thread_requires_a_body()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
-        $thread = Thread::factory()->make(['body' => null]);
 
-        $this->post('/threads', $thread->toArray())
-            ->assertSessionHasErrors('title');
+        $this->publishThread(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function a_thread_requires_a_valid_channel()
+    {
+        $this->signIn();
+
+        $this->publishThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    protected function publishThread($overrides = [])
+    {
+        $this->signIn();
+
+        return $this->post('/threads', Thread::factory()->raw($overrides));
     }
 }

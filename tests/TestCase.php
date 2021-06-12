@@ -11,10 +11,20 @@ abstract class TestCase extends BaseTestCase
 
     public function signIn($user = null)
     {
-        $user = $user ?? User::factory()->create();
+        $user = $user ?? $this->create(User::class);
 
         $this->be($user);
 
         return $this;
+    }
+
+    public function make($className, $overrides = [])
+    {
+        return  $className::factory()->make($overrides);
+    }
+
+    public function create($className, $overrides = [])
+    {
+        return $className::factory()->create($overrides);
     }
 }

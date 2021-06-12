@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +17,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_view_all_threads()
     {
+        $this->withoutExceptionHandling();
         $thread = Thread::factory()->create();
 
         $this->get('/threads')
@@ -41,5 +44,30 @@ class ReadThreadsTest extends TestCase
 
         $this->get($thread->path())
             ->assertSee($reply->body);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_according_to_a_channel()
+    {
+        $thread = Thread::factory()->create();
+        $anotherThread = Thread::factory()->create();
+        $firstChannel = Channel::first();
+
+        $this->get("/threads/{$firstChannel->slug}")
+            ->assertSee($thread->title)
+            ->assertDontSee($anotherThread->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_username()
+    {
+        $user = $this->create(User::class);
+
+        $threadByUser = $this->create(Thread::class, ['author_id' => $user->id]);
+        $threadNotByUser = $this->create(Thread::class);
+
+        $this->get("/threads?by={$user->name}")
+            ->assertSee($threadByUser->body)
+            ->assertDontSee($threadNotByUser->body);
     }
 }

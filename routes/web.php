@@ -28,6 +28,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/threads', [ThreadsController::class, 'index'])->name('threads');
 Route::get('/threads/create', [ThreadsController::class, 'create'])->middleware('auth');
+Route::get('/threads/{channel:slug}', [ThreadsController::class, 'index']);
 Route::get('/threads/{channel:slug}/{thread}', [ThreadsController::class, 'show']);
 
 Route::post('/threads', [ThreadsController::class, 'store'])->middleware('auth');
