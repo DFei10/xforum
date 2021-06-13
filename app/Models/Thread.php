@@ -11,6 +11,13 @@ class Thread extends Model
 
     protected $fillable = ['title', 'body', 'author_id', 'channel_id'];
 
+    public static function booted()
+    {
+        static::addGlobalScope('replies_count', function ($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     public function addReply($attributes)
     {
         $this->replies()->create($attributes);

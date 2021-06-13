@@ -29,14 +29,15 @@
                 <p class="mt-2">{{ $thread->body }}</p>
             </div>
 
-            <h2 class="text-xl font-bold mb-7">Replies</h2>
+            <h2 class="text-xl font-bold mb-7 text-gray-800">{{ $thread->replies_count }} {{ \Str::plural('Reply', $thread->replies_count) }}</h2>
 
             <div class="space-y-4">
-                @foreach ($thread->replies as $reply)
+                @foreach ($replies as $reply)
                     <div class="p-6 bg-white rounded-lg shadow">
                         <p>{{ $reply->body }}</p>
                     </div>
                 @endforeach
+                {{ $replies->links() }}
             </div>
             <div class="mt-10">
                 @auth
