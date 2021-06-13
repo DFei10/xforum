@@ -18,13 +18,13 @@ abstract class TestCase extends BaseTestCase
         return $this;
     }
 
-    public function make($className, $overrides = [])
+    public function make($className, $overrides = [], $count = null)
     {
-        return  $className::factory()->make($overrides);
+        return  $className::factory($count)->make($overrides);
     }
 
-    public function create($className, $overrides = [])
+    public function create($className, $overrides = [], $count = null)
     {
-        return $className::factory()->create($overrides);
+        return $className::factory($count)->create($overrides);
     }
 }

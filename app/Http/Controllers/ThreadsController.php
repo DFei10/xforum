@@ -23,6 +23,10 @@ class ThreadsController extends Controller
             $threads = $channel->threads()->latest();
         }
 
+        if (request()->wantsJson()) {
+            return $threads->get();
+        }
+
         return view('threads.index', [
             'threads' => $threads->get()
         ]);
