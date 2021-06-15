@@ -31,10 +31,51 @@
 
             <h2 class="text-xl font-bold mb-7 text-gray-800">{{ $thread->replies_count }} {{ \Str::plural('Reply', $thread->replies_count) }}</h2>
 
+
             <div class="space-y-4">
                 @foreach ($replies as $reply)
-                    <div class="p-6 bg-white rounded-lg shadow">
-                        <p>{{ $reply->body }}</p>
+                    <div class="px-6 pt-6 pb-2 bg-white rounded-lg shadow">
+                        <div class="flex">
+                            <div class="mr-7 w-10">
+                                <img
+                                    src="https://pbs.twimg.com/profile_images/914894066072113152/pWD-GUwG_400x400.jpg"
+                                    alt="Author avatar"
+                                    class="rounded-full"
+                                >
+                            </div>
+                            <div class="w-full">
+                                <div class="text-sm text-gray-400 mb-2 flex justify-between">
+                                    <div>
+                                        <h4>
+                                            <a href="#" class="font-bold text-gray-700">{{ $reply->owner->name }}</a> replied
+                                        </h4>
+                                        <span class="text-xs block">{{ $reply->created_at->diffForHumans() }}</span>
+                                    </div>
+                                    <div>
+                                        <form action="/replies/{{ $reply->id }}/favorite" method="POST">
+                                            @csrf
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <p>{{ $reply->body }}</p>
+                                <div class="border-t border-gray-100 mt-4">
+                                    <form action="/replies/{{ $reply->id }}/favorite" method="POST" class="pt-1">
+                                        @csrf
+                                        <button {{ $reply->isFavorited() ? 'disabled' : '' }}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="align-text-top inline-block h-5 w-5 text-gray-700 hover:text-indigo-700 transition duration-200 {{ $reply->isFavorited() ? 'text-indigo-700' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                        </button>
+                                        <span class="text-gray-700 text-sm ml-2 py-1 inline-block">{{ $reply->favorites_count }}</span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 @endforeach
                 {{ $replies->links() }}

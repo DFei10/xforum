@@ -9,6 +9,8 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $with = ['author', 'channel'];
+
     protected $fillable = ['title', 'body', 'author_id', 'channel_id'];
 
     public static function booted()

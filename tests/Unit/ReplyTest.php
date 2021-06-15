@@ -18,4 +18,10 @@ class ReplyTest extends TestCase
 
         $this->assertInstanceOf(User::class, $reply->owner);
     }
+
+    /** @test */
+    // public function it_has_favorites()
+    // {
+    //     //
+    // }
 }
