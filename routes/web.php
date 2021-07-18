@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoritesContrller;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,11 @@ Route::get('/threads', [ThreadsController::class, 'index'])->name('threads');
 Route::get('/threads/create', [ThreadsController::class, 'create'])->middleware('auth');
 Route::get('/threads/{channel:slug}', [ThreadsController::class, 'index']);
 Route::get('/threads/{channel:slug}/{thread}', [ThreadsController::class, 'show']);
+Route::delete('/threads/{channel:slug}/{thread}', [ThreadsController::class, 'destroy'])->middleware('auth');
 
 Route::post('/threads', [ThreadsController::class, 'store'])->middleware('auth');
 Route::post('/threads/{channel:slug}/{thread}/replies', [RepliesController::class, 'store'])->middleware('auth');
 Route::post('/replies/{reply}/favorite', [FavoritesContrller::class, 'store'])->middleware('auth');
+
+
+Route::get('/profiles/{user:name}', [ProfilesController::class, 'show']);

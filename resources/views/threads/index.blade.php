@@ -64,7 +64,7 @@
                             <div class="border-b-2 border-gray-50 my-5"></div>
                             <div class="flex justify-between items-center text-gray-400 text-sm">
                                 <div>
-                                    Posted By <a href="#" class="text-indigo-700">{{ $thread->author->name }}</a>
+                                    Posted By <a href="/threads?by={{ $thread->author->name }}" class="text-indigo-700">{{ $thread->author->name }}</a>
                                     <span class="ml-6">{{ $thread->created_at->diffForHumans() }}</span>
                                 </div>
 

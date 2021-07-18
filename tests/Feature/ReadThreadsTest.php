@@ -74,14 +74,14 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_popularity()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
+        $threadWithZeroReplies = $this->create(Thread::class);
+
         $threadWithTowReplies = $this->create(Thread::class);
         $this->create(Reply::class, ['thread_id' => $threadWithTowReplies->id], 2);
 
         $threadWithThreeReplies = $this->create(Thread::class);
         $this->create(Reply::class, ['thread_id' => $threadWithThreeReplies->id], 3);
-
-        $threadWithZeroReplies = $this->create(Thread::class);
 
         $response = $this->getJson('threads?popular=1')->json();
 

@@ -46,6 +46,10 @@
                             <x-dropdown-link href="/threads/create" class="text-sm">
                                 {{ __('Create Thread') }}
                             </x-dropdown-link>
+
+                            <x-dropdown-link href="/profiles/{{ auth()->user()->name }}" class="text-sm">
+                                {{ __('My Profile') }}
+                            </x-dropdown-link>
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

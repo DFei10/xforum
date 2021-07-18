@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected $with = ['author', 'channel'];
 
@@ -17,6 +18,10 @@ class Thread extends Model
     {
         static::addGlobalScope('replies_count', function ($builder) {
             $builder->withCount('replies');
+        });
+
+        static::deleting(function ($thread) {
+            $thread->replies->each->delete();
         });
     }
 

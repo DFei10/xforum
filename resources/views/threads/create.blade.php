@@ -40,7 +40,7 @@
 
                 <div>
                     <x-label for="body" :value="__('Body')" />
-                    <x-textarea id="body" name="body" class="block mt-1 w-full" rows="5">{{ old('title') }}</x-textarea>
+                    <x-textarea id="body" name="body" class="block mt-1 w-full" rows="5">{{ old('body') }}</x-textarea>
 
                     @error('body')
                         <div class="text-sm text-red-500 mt-1">

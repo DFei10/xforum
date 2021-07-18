@@ -11,11 +11,12 @@ class ThreadFilters extends Filters
     protected function by($name)
     {
         $user = User::whereName($name)->firstOrFail();
-        $this->query->where('author_id', $user->id);
+        $this->builder->where('author_id', $user->id);
     }
 
     protected function popular()
     {
-        $this->query->orderByDesc('replies_count');
+        $this->builder->getQuery()->orders= [];
+        $this->builder->orderByDesc('replies_count');
     }
 }
